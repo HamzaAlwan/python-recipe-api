@@ -1,0 +1,21 @@
+# Docker Engine Version
+version: "3.7"
+
+services:
+  # The name of the service
+  app:
+    build:
+      # The context is the current dirictory.
+      context: .
+    ports:
+      # This is going to map our project port from the port "8000" on our host to the port "8000" on our image.
+      - "8000:8000"
+    # volumes Allows us to get the updates that we make to our project into our docker image in real time
+    volumes:
+      # This is going to map our project dirictory both locally and the one we created in the Docker container in real time.
+      - ./app:/app
+    command: >
+      # the command to run our application
+      sh -c "python manage.py runserver 0.0.0.0: 8000"
+    # This will keep restarting the application if any error occured.
+    restart: always
